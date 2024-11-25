@@ -6,12 +6,14 @@ import dotenv from 'dotenv'
 import { connectDB } from './config/connection'
 import { corsOptions, PORT } from './config/env'
 import { router } from './routes/routes'
-import { Request,Response } from 'express'
+import { Request,Response ,Application} from 'express'
+import  ErrorHandler  from './middlewares/common/errorHandler'
+
 connectDB()
 dotenv.config()
 
 
-const app=express()
+const app:Application=express()
 
 
 app.use(express.json())
@@ -29,7 +31,7 @@ app.use('*',(req:Request,res:Response)=>{
 })
 
 
-// app.use(errorHandler)
+app.use(ErrorHandler)
 
 app.listen(PORT,()=>{
  console.log(`server running on port http://localhost/${PORT}`)

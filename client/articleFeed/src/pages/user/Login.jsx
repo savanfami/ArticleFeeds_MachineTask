@@ -1,9 +1,16 @@
 import React, { useState } from "react";
+import { Link, useNavigate } from 'react-router-dom'
+import { login } from "../../redux/action/userAction";
+import { useDispatch } from "react-redux";
+import {toast } from 'react-toastify';
+
 
 export const Login = () => {
   const [errors, setErrors] = useState({});
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [formData, setFormData] = useState({
-    emailOrPhone: "",
+    email: "",
     password: "",
   });
 
@@ -24,10 +31,10 @@ export const Login = () => {
     const Errors = {};
     let isValid = true;
 
-    if (!formData.emailOrPhone) {
-      Errors.emailOrPhone = "Email or phone number is required";
+    if (!formData.email) {
+      Errors.email = "email or phone is required";
       isValid = false;
-    }
+    } 
 
     if (!formData.password) {
       Errors.password = "Password is required";
@@ -38,15 +45,23 @@ export const Login = () => {
     return isValid;
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = async(e) => {
+    e.preventDefault()
     if (validateForm()) {
-      console.log("Form Data Submitted:", formData);
-      alert("Login successful!");
+      try {
+        const data = await dispatch(login(formData)).unwrap()
+        if(data){
+          navigate('/')
+        }
+      } catch (error) {
+        toast.error(error?.message)
+      }
     }
   };
 
   return (
+    <>
+
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-50 p-4">
       <div className="rounded-lg shadow-lg max-w-md w-full p-6 bg-white">
         <h2 className="text-2xl font-semibold text-center mb-4 text-gray-800">
@@ -57,16 +72,16 @@ export const Login = () => {
           <div>
             {/* Email or Phone */}
             <input
-              id="emailOrPhone"
+              id="email"
               type="text"
-              name="emailOrPhone"
+              name="email"
               onChange={handleChange}
-              value={formData.emailOrPhone}
+              value={formData.email}
               placeholder="Email or Phone"
               className="w-full border border-gray-300 p-2 rounded-md text-sm focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
             />
-            {errors.emailOrPhone && (
-              <p className="text-red-500 text-xs">{errors.emailOrPhone}</p>
+            {errors.email && (
+              <p className="text-red-500 text-xs">{errors.email}</p>
             )}
           </div>
 
@@ -94,13 +109,15 @@ export const Login = () => {
 
           <p className="text-center text-sm text-gray-600 mt-4">
             Don't have an account?{" "}
-            <span className="cursor-pointer text-blue-500 font-semibold">
+           <Link to='/signup'> <span className="cursor-pointer text-blue-500 font-semibold">
               Sign up
             </span>
+            </Link> 
           </p>
         </form>
       </div>
     </div>
+    </>
   );
 };
 

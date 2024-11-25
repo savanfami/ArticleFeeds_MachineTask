@@ -1,4 +1,5 @@
 import React from 'react'
+import { Outlet } from 'react-router-dom'
 import { Navbar } from '../components/header/Navbar'
 import { Signup } from '../pages/user/Signup'
 // import { Outlet } from 'react-router-dom'
@@ -6,9 +7,8 @@ import { Signup } from '../pages/user/Signup'
 export const UserLayout = () => {
   return (
     <div>
-      {/* <Navbar/> */}
- <Signup/>
-      {/* <Outlet/> */}
+      <Navbar/>
+      <Outlet/>
     </div>
   )
 }

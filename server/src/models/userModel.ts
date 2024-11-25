@@ -3,16 +3,16 @@ import { IUser } from "../types";
 import bcrypt from 'bcrypt'
 const SALT_ROUNDS = 10
 
-export interface IUserDocument extends IUser, Document {
+export interface IUserDocument extends IUser, Omit<Document,'isModified'> {
     comparePassword(enteredPassword: string): Promise<boolean>;
 }
 
 const UserSchema = new Schema<IUserDocument>({
-    firstname: {
+    firstName: {
         type: String,
         required: true
     },
-    lastname: {
+    lastName: {
         type: String,
         required: true
     },
@@ -24,7 +24,7 @@ const UserSchema = new Schema<IUserDocument>({
         type: String,
         required: true
     },
-    DOB: {
+    dob: {
         type: Date,
         required: true
     },
@@ -55,28 +55,28 @@ UserSchema.pre<IUser>('save', async function (next) {
     }
 });
 
-UserSchema.pre('findOneAndUpdate', async function (next) {
-    const update = this.getUpdate() as { $set?: { password?: string } };
+// UserSchema.pre('findOneAndUpdate', async function (next) {
+//     const update = this.getUpdate() as { $set?: { password?: string } };
 
-    if (update?.$set?.password) {
-        console.log('------------------------')
-        try {
-            const salt = await bcrypt.genSalt(SALT_ROUNDS);
-            const hash = await bcrypt.hash(update?.$set?.password, salt);
+//     if (update?.$set?.password) {
+//         console.log('------------------------')
+//         try {
+//             const salt = await bcrypt.genSalt(SALT_ROUNDS);
+//             const hash = await bcrypt.hash(update?.$set?.password, salt);
 
-            this.setUpdate({
-                ...update,
-                $set: {
-                    ...update.$set,
-                    password: hash
-                }
-            });
-        } catch (error) {
-            return next(error as CallbackError);
-        }
-    }
-    next();
-});
+//             this.setUpdate({
+//                 ...update,
+//                 $set: {
+//                     ...update.$set,
+//                     password: hash
+//                 }
+//             });
+//         } catch (error) {
+//             return next(error as CallbackError);
+//         }
+//     }
+//     next();
+// });
 
 UserSchema.methods.comparePassword = async function (enteredPassword: string): Promise<boolean> {
     return bcrypt.compare(enteredPassword, this?.password)
