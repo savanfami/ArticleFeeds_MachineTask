@@ -38,4 +38,20 @@ export class ArticleService {
             throw ErrorResponse.badRequest('Error while deleting article')
         }
     }
+    async getArticlesByPreference(id: string): Promise<IArticle[] | null> {
+        try {
+            return await this.articleRepository.getArticlesByPreference(id)
+        } catch (error) {
+            throw ErrorResponse.badRequest('Error while deleting article')
+        }
+    }
+    async getUserInteractions(id: string,articleId:string,type:string): Promise<IArticle | null> {
+        try {
+            return await this.articleRepository.getUserInteractions(id,articleId,type)
+        } catch (error) {
+            throw ErrorResponse.badRequest('Error while deleting article')
+        }
+    }
+
+
 }

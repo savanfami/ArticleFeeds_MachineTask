@@ -23,10 +23,11 @@ export interface ILogin {
 export interface IArticle {
     userId: ObjectId,
     title: string
-    content: string
     description: string;
-    image: string;
-    tags: string[];
-    category: string;
-    likes: string[]
+    imageUrl: string;
+    tags: string;
+    references: string;
+    likes?: ObjectId[]
+    dislikes?:ObjectId[]
+    blocks?:ObjectId[]
 }

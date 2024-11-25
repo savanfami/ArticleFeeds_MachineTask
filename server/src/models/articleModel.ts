@@ -7,8 +7,12 @@ export interface IArticleMOdel extends Document {
     imageUrl: string;
     tags: string;
     references: string;
-    likes: mongoose.Types.ObjectId[];
-    dislikes: mongoose.Types.ObjectId[];
+    likes: number
+    dislikes: number
+    userInteractions:[{
+        userId:ObjectId,
+        type:string,
+    }]
     blocks: mongoose.Types.ObjectId[];
 }
 
@@ -40,13 +44,15 @@ const articleSchema = new Schema<IArticleMOdel>({
         required: true
     },
     likes: {
-        type: [mongoose.Schema.Types.ObjectId],
-        ref: 'Users'
+        type: Number,
     },
     dislikes: {
-        type: [mongoose.Schema.Types.ObjectId],
-        ref: 'Users'
+        type: Number,
     },
+    userInteractions:[{
+        userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+        type: { type: String, enum: ['like', 'dislike'] },
+    }],
     blocks: {
         type: [mongoose.Schema.Types.ObjectId],
         ref: 'Users'

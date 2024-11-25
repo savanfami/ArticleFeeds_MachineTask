@@ -16,14 +16,12 @@ export class ArticleController {
     async createArticle(req: ModifiedRequest, res: Response, next: NextFunction) {
         try {
             const { data }: { data: any } = req.body
-            console.log(data, 'data form create article')
             const { id } = req.user
             const updatedBody = {
                 ...data,
                 userId: id
             }
             const article = await this.articleService.createArticle(updatedBody)
-            console.log(article, 'articlessdds')
             if (!article) throw ErrorResponse.badRequest('Cant create article')
             res.status(200).json({ success: true, data: article, message: 'article created succesfully' })
         } catch (error) {
@@ -44,8 +42,8 @@ export class ArticleController {
 
     async editArticleByUser(req: ModifiedRequest, res: Response, next: NextFunction) {
         try {
-            const {articleId}=req.params
-            const article = await this.articleService.editArticleByUser(articleId,req.body)
+            const { articleId } = req.params
+            const article = await this.articleService.editArticleByUser(articleId, req.body)
             if (!article) throw ErrorResponse.badRequest('Cant update article')
             res.status(200).json({ success: true, data: article, message: 'article updated succesfully' })
         } catch (error) {
@@ -54,7 +52,7 @@ export class ArticleController {
     }
     async deleteArticleByUser(req: ModifiedRequest, res: Response, next: NextFunction) {
         try {
-            const {articleId}=req.params
+            const { articleId } = req.params
             const article = await this.articleService.deleteArticleByUser(articleId)
             if (!article) throw ErrorResponse.badRequest('Cant delete article')
             res.status(200).json({ success: true, data: article, message: 'article deleted succesfully' })
@@ -62,6 +60,32 @@ export class ArticleController {
             next(error)
         }
     }
+    async getArticlesByPreference(req: ModifiedRequest, res: Response, next: NextFunction) {
+        try {
+            const { id } = req?.user
+            const article = await this.articleService.getArticlesByPreference(id)
+            if (!article) throw ErrorResponse.badRequest('Cant delete article')
+            res.status(200).json({ success: true, data: article, message: 'article fetched succesfully' })
+        } catch (error) {
+            next(error)
+        }
+    }
+    async getUserInteractions(req: ModifiedRequest, res: Response, next: NextFunction) {
+        try {
+            const { id } = req?.user
+            const { articleId, type } = req.body;
+            if(!req.body){
+                throw ErrorResponse.badRequest('no data found')
+            }
+            const interaction=await this.articleService.getUserInteractions(id,articleId,type)
+            if (!interaction) throw ErrorResponse.badRequest('Cant delete article')
+            res.status(200).json({ success: true, data: interaction, message: 'success' })
+        } catch (error) {
+            next(error)
+        }
+    }
+
+
 
 }
 

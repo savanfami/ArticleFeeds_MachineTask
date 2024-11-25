@@ -51,7 +51,7 @@ export const Login = () => {
       try {
         const data = await dispatch(login(formData)).unwrap()
         if(data){
-          navigate('/')
+          navigate('/',{replace:true})
         }
       } catch (error) {
         toast.error(error?.message)

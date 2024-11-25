@@ -55,28 +55,6 @@ UserSchema.pre<IUser>('save', async function (next) {
     }
 });
 
-// UserSchema.pre('findOneAndUpdate', async function (next) {
-//     const update = this.getUpdate() as { $set?: { password?: string } };
-
-//     if (update?.$set?.password) {
-//         console.log('------------------------')
-//         try {
-//             const salt = await bcrypt.genSalt(SALT_ROUNDS);
-//             const hash = await bcrypt.hash(update?.$set?.password, salt);
-
-//             this.setUpdate({
-//                 ...update,
-//                 $set: {
-//                     ...update.$set,
-//                     password: hash
-//                 }
-//             });
-//         } catch (error) {
-//             return next(error as CallbackError);
-//         }
-//     }
-//     next();
-// });
 
 UserSchema.methods.comparePassword = async function (enteredPassword: string): Promise<boolean> {
     return bcrypt.compare(enteredPassword, this?.password)

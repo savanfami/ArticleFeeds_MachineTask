@@ -19,7 +19,9 @@ router.route('/updatepassword').put(verify, (req, res, next) => userController.u
 router.route('/updatepreference').patch(verify, (req, res, next) => userController.updatePreference(req as ModifiedRequest, res, next))
 
 //article routes
-router.route('/create').post(verify,(req, res, next) => articleController.createArticle(req as ModifiedRequest, res, next))
-router.route('/article').get(verify,(req,res,next)=>articleController.getArticlesByUser(req as ModifiedRequest,res,next))
-router.route('/article/:articleId').put(verify,(req,res,next)=>articleController.editArticleByUser(req as unknown as ModifiedRequest,res,next))
-.delete(verify, (req, res, next) => articleController.deleteArticleByUser(req as unknown as ModifiedRequest, res, next)); 
+router.route('/create').post(verify, (req, res, next) => articleController.createArticle(req as ModifiedRequest, res, next))
+router.route('/article').get(verify, (req, res, next) => articleController.getArticlesByUser(req as ModifiedRequest, res, next))
+router.route('/article/:articleId').put(verify, (req, res, next) => articleController.editArticleByUser(req as unknown as ModifiedRequest, res, next))
+    .delete(verify, (req, res, next) => articleController.deleteArticleByUser(req as unknown as ModifiedRequest, res, next));
+router.route('/articlepreference').get(verify, (req, res, next) => articleController.getArticlesByPreference(req as unknown as ModifiedRequest, res, next))
+router.route('/interact').post(verify, (req, res, next) => articleController.getUserInteractions(req as ModifiedRequest, res, next))
