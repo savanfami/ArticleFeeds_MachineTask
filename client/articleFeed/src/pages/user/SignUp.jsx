@@ -8,7 +8,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-export const Signup = () => {
+ const SignUp = () => {
   const [errors, setErrors] = useState({});
   const {loading,err,loggedIn}=useSelector(state=>state.user)
   const dispatch = useDispatch();
@@ -329,3 +329,4 @@ export const Signup = () => {
   );
 };
 
+export default SignUp
