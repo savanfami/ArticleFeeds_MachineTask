@@ -25,7 +25,7 @@ export interface IArticle {
     title: string
     description: string;
     imageUrl: string;
-    tags: string;
+    tags: string; 
     references: string;
     likes?: ObjectId[]
     dislikes?:ObjectId[]
