@@ -7,7 +7,7 @@ import { Articles } from "./pages/user/ArticleListPage";
 import { SettingsPage } from "./pages/user/SetttingsPage";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import SignUp from "./pages/user/Signup";
+import SignUp from "./pages/user/SignUp";
 
 function App() {
   return (
