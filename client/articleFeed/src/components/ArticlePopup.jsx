@@ -15,8 +15,7 @@ export const ArticlePopup = ({ article, onClose ,render}) => {
   );
 
   const handleInteraction = async (type) => {
-    if (userInteraction === type) type = null;
-
+    const interactionType = userInteraction === type ? null : type;
     try {
       const { data } = await axiosInstance.post(
         "/interact",
@@ -28,7 +27,7 @@ export const ArticlePopup = ({ article, onClose ,render}) => {
       );
       setLikes(data?.data?.likes);
       setDislikes(data?.data?.dislikes);
-      setUserInteraction(type); 
+      setUserInteraction(interactionType); 
       render()
     } catch (error) {
       console.error("Interaction failed", error);
