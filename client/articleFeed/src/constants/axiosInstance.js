@@ -1,7 +1,7 @@
 import axios from 'axios'
 const {VITE_URL} = import.meta.env 
-
-export const axiosInstance = axios.create({ baseURL: VITE_URL});
+console.log(VITE_URL,'VITE')
+export const axiosInstance = axios.create({ baseURL: 'articlefeedsmachinetask-production.up.railway.app'});
 
 
 axiosInstance.interceptors.response.use(
