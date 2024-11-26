@@ -113,18 +113,18 @@ export const Signup = () => {
       Errors.dob = "dob is required";
       isValid = false;
 
-      // } else {
-      //   const dob = new Date(formData.dob);
-      //   const today = new Date();
-      //   const minAgeDate = new Date();
-      //   minAgeDate.setFullYear(today.getFullYear() - 10);
-      //   if (dob > today) {
-      //     Errors.dob = "Date of birth cannot be in the future";
-      //     isValid = false;
-      //   } else if (dob > minAgeDate) {
-      //     Errors.dob = "You must be at least 10 years old";
-      //     isValid = false;
-      //   }
+      } else {
+        const dob = new Date(formData.dob);
+        const today = new Date();
+        const minAgeDate = new Date();
+        minAgeDate.setFullYear(today.getFullYear() - 10);
+        if (dob > today) {
+          Errors.dob = "Date of birth cannot be in the future";
+          isValid = false;
+        } else if (dob > minAgeDate) {
+          Errors.dob = "You must be at least 10 years old";
+          isValid = false;
+        }
     }
 
     setErrors(Errors);
@@ -143,11 +143,11 @@ export const Signup = () => {
     }
   };
 
-  // useEffect(() => {
-  //   if (loggedIn) {
-  //     navigate('/')
-  //   } 
-  // }, [])
+  useEffect(() => {
+    if (loggedIn) {
+      navigate('/')
+    } 
+  }, [])
 
   return (
     <>

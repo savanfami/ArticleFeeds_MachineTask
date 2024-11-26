@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, Navigate, useNavigate } from 'react-router-dom'
 import { login } from "../../redux/action/userAction";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {toast } from 'react-toastify';
 
 
@@ -9,6 +9,7 @@ export const Login = () => {
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const user = useSelector((state) => state.user);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -58,6 +59,11 @@ export const Login = () => {
       }
     }
   };
+
+
+  if (user.loggedIn) {
+    return <Navigate to="/" />;
+  }
 
   return (
     <>

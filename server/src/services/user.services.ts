@@ -25,7 +25,7 @@ export class UserService {
         }
         let res = await user.comparePassword(data.password)
         if (res) {
-            return user._id as any
+            return user as any
         } else {
             return null
         }

@@ -10,7 +10,11 @@ export const Articles = () => {
   const [articles, setArticles] = useState([]);
   const [loading,setLoading]=useState(true)
   const [selectedArticle, setSelectedArticle] = useState(null);
+  const [reload,setReload]=useState(1)
 
+  const onReload=()=>{
+    setReload(prev=>prev+1)
+  }
   const fetchArticleByPreference = async () => {
     try {
       const { data } = await axiosInstance.get("/articlepreference", config);
@@ -27,8 +31,9 @@ export const Articles = () => {
   };
 
   useEffect(() => {
+    console.log('clalidng')
     fetchArticleByPreference();
-  }, []);
+  }, [reload]);
 
   return (
     <div className="min-h-screen bg-gray-100">
@@ -39,7 +44,7 @@ export const Articles = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {articles.map((article) => (
               <div
-                key={article.id}
+                key={article._id}
                 onClick={() => setSelectedArticle(article)}
                 className="cursor-pointer"
               >
@@ -55,6 +60,7 @@ export const Articles = () => {
       </main>
       {selectedArticle && (
         <ArticlePopup
+          render={onReload}
           article={selectedArticle}
           onClose={() => setSelectedArticle(null)}
         />

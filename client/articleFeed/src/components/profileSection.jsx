@@ -43,7 +43,21 @@ export const ProfileSection = ({ data }) => {
     if (!profile.phone.trim() ) {
       newErrors.phone = " phone number is required";
     }
-    if (!profile.dob.trim()) newErrors.dob = "Date of Birth is required";
+    if (!profile.dob){
+      newErrors.dob = "Date of Birth is required";
+    } else {
+      const dob = new Date(data.dob);
+      const today = new Date();
+      const minAgeDate = new Date();
+      minAgeDate.setFullYear(today.getFullYear() - 10);
+      if (dob > today) {
+        newErrors.dob = "Date of birth cannot be in the future";
+        isValid = false;
+      } else if (dob > minAgeDate) {
+        newErrors.dob = "You must be at least 10 years old";
+        isValid = false;
+      }
+    }
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
