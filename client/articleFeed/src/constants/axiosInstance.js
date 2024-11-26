@@ -1,8 +1,7 @@
 import axios from 'axios'
-export const URL='http://localhost:8000/api'
+const {VITE_URL} = import.meta.env 
 
-
-export const axiosInstance = axios.create({ baseURL: URL});
+export const axiosInstance = axios.create({ baseURL: VITE_URL});
 
 
 axiosInstance.interceptors.response.use(
