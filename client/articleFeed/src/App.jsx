@@ -8,6 +8,7 @@ import { SettingsPage } from "./pages/user/SetttingsPage";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import SignUp from "./pages/user/SignUp";
+// import { Parent } from "./pages/user/Workout";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Routes>
           <Route path="/signup" element={<SignUp />} />
           <Route path="/login" element={<Login />} />
+          {/* <Route path='/workout' element={<Parent/>}/> */}
           <Route
             path="/"
             element={

@@ -78,7 +78,7 @@ export class ArticleController {
                 throw ErrorResponse.badRequest('no data found')
             }
             const interaction=await this.articleService.getUserInteractions(id,articleId,type)
-            if (!interaction) throw ErrorResponse.badRequest('Cant delete article')
+            if (!interaction) throw ErrorResponse.badRequest('Cant interact with article')
             res.status(200).json({ success: true, data: interaction, message: 'success' })
         } catch (error) {
             next(error)

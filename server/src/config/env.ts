@@ -10,4 +10,3 @@ export const corsOptions = {
     credentials: true,
   };
 
-  console.log(corsOptions,'cors option')

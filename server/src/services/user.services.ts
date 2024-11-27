@@ -15,7 +15,7 @@ export class UserService {
         }
         return this.userRepository.create(data)
     }
-    async login(data: ILogin): Promise<string | null> {
+    async login(data: ILogin): Promise<IUserDocument | null> {
         let user
         if (data?.email) {
             user = await this.userRepository.findByEmailOrPhone(data.email)

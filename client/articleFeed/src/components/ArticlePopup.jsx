@@ -21,7 +21,7 @@ export const ArticlePopup = ({ article, onClose ,render}) => {
         "/interact",
         {
           articleId: article._id,
-          type,
+          type:interactionType
         },
         config
       );
@@ -47,7 +47,6 @@ export const ArticlePopup = ({ article, onClose ,render}) => {
           <div className="flex justify-between items-center">
           <div className="flex gap-4">
           <div className="flex gap-4">
-              {/* Like button - toggle between like and no interaction */}
               <button
                 onClick={() => handleInteraction("like")}
                 className={`flex items-center gap-1 ${
@@ -64,7 +63,7 @@ export const ArticlePopup = ({ article, onClose ,render}) => {
                   userInteraction === "dislike" ? "text-gray-800" : "text-gray-600"
                 }`}
               >
-                <ThumbsDown size={20} /> Dislike 
+                <ThumbsDown size={20} fill={userInteraction==='dislike'?'gray':'none'} />  Dislike 
               </button>
             </div>
             </div>

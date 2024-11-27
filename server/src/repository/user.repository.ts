@@ -1,9 +1,10 @@
+import { IUserRepo } from "../interfaces/IUserRepo";
 import { IUserDocument, UserModel } from "../models/userModel";
 import { IUser } from "../types";
 import bcrypt from 'bcrypt'
 
-export class UserRepository {
-    async create(data: IUser) {
+export class UserRepository implements IUserRepo {
+    async create(data: IUser):Promise<IUserDocument> {
         return await UserModel.create(data)
     }
     async findByEmail(email: string): Promise<IUserDocument> {
@@ -33,7 +34,7 @@ export class UserRepository {
         return await UserModel.findById(id) as IUser
     }
 
-    async updatePassword(id: string, newPassword: any): Promise<any | null> {
+    async updatePassword(id: string, newPassword: string): Promise<any | null> {
         const hashedPassword = await bcrypt.hash(newPassword, 10);
         const updateUser = await UserModel.findByIdAndUpdate(
             id,

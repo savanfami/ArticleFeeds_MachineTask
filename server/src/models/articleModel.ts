@@ -45,9 +45,11 @@ const articleSchema = new Schema<IArticleMOdel>({
     },
     likes: {
         type: Number,
+        default:0
     },
     dislikes: {
         type: Number,
+        default:0
     },
     userInteractions:[{
         userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },

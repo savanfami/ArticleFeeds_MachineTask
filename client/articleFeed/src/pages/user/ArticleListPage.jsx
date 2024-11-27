@@ -22,7 +22,6 @@ export const Articles = () => {
         setArticles(data?.data);
       }
       setLoading(false)
-      console.log(articles, "aticles from the state");
     } catch (error) {
       console.log(error);
     }finally{
@@ -31,7 +30,6 @@ export const Articles = () => {
   };
 
   useEffect(() => {
-    console.log('clalidng')
     fetchArticleByPreference();
   }, [reload]);
 

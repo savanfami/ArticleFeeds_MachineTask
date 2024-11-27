@@ -7,4 +7,4 @@ export class UserFactory{
         const userService=new UserService(userRepository)
         return userService
     }
-}
+}   

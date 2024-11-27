@@ -27,7 +27,7 @@ export class UserController {
       if (!user) {
         throw ErrorResponse.badRequest('Password is incorrect')
       }
-      let token = generateToken({ id: user })
+      let token = generateToken({ id: user._id })
       res.status(200)
         .cookie('User', token, { httpOnly: true, sameSite: 'none', secure: true, maxAge: 60 * 60 * 24 * 1000 * 12 })
         .json({ success: true, data: user })

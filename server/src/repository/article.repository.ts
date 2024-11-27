@@ -21,7 +21,6 @@ export class ArticleRepository implements IArticleRepo {
                 new: true,
             }
         );
-        console.log(updatedArticle, 'updted artilce')
         if (updatedArticle) {
             return true
         } else {
@@ -49,51 +48,43 @@ export class ArticleRepository implements IArticleRepo {
             return null
         }
     }
-    async getUserInteractions(userId: any, articleId: string, type: string): Promise<IArticle | null> {
+    async getUserInteractions(userId: any, articleId: string, type: string): Promise<any | null> {
         try {
-            const article = await ArticlModel.findById(articleId);
-    
+            const article = await ArticlModel.findById(articleId).select('likes dislikes userInteractions');
             if (!article) {
                 return null;
             }
-    
-            if (typeof article.likes !== 'number') article.likes = 0;
-            if (typeof article.dislikes !== 'number') article.dislikes = 0;
-    
-            const existingInteractionIndex = article.userInteractions.findIndex(
-                (interaction) => interaction.userId.toString() === userId
-            );
-    
+            const existingInteractionIndex = article.userInteractions.findIndex(interaction => interaction.userId.toString() === userId.toString())
             if (existingInteractionIndex !== -1) {
-                const existingType = article.userInteractions[existingInteractionIndex].type;
-    
-                if (existingType === 'like') {
+                const existingInteraction = article.userInteractions[existingInteractionIndex]
+                if (existingInteraction.type === 'like') {
                     article.likes = Math.max(0, article.likes - 1);
-                    article.userInteractions.splice(existingInteractionIndex, 1);
-                }
-                if (existingType === 'dislike') {
+                } else if (existingInteraction.type === 'dislike') {
                     article.dislikes = Math.max(0, article.dislikes - 1);
-                    article.userInteractions.splice(existingInteractionIndex, 1);
                 }
-            }
-    
-            if (type) {
-                if (existingInteractionIndex === -1 || article.userInteractions[existingInteractionIndex].type !== type) {
-                    article.userInteractions.push({ userId, type });
-    
-                    if (type === 'like') article.likes++;
-                    if (type === 'dislike') article.dislikes++;
+                if (type === existingInteraction.type) {
+                    article.userInteractions.splice(existingInteractionIndex, 1)
+                } else {
+                    existingInteraction.type = type
                 }
+            } else if (type) {
+                article.userInteractions.push({ userId, type })
             }
-    
-            await article.save();
-    
-            return article as unknown as IArticle;
+
+            if (type === 'like') {
+                article.likes += 1;
+            } else if (type === 'dislike') {
+                article.dislikes += 1
+            }
+
+            const data = await article.save()
+            return data
         } catch (error) {
             console.error(error);
             return null;
         }
     }
+
 
 
 

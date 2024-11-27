@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Plus, X, Edit2, Trash2 } from "lucide-react";
+import { Plus, X, Edit2, Trash2, ThumbsDown, ThumbsUp } from "lucide-react";
 import { useDispatch } from "react-redux";
 import { axiosInstance } from "../constants/axiosInstance";
 import { CreateArticle } from "../redux/action/articeAction";
@@ -84,6 +84,7 @@ export const ArticleSection = () => {
       console.error("Error saving article:", error);
     }
   };
+
 
   const handleEdit = (article) => {
     setIsEditing(true);
@@ -185,6 +186,8 @@ export const ArticleSection = () => {
                     {tag.trim()}
                   </span>
                 ))}
+              <ThumbsUp size={16} /> {article?.likes}
+              <ThumbsDown size={16} /> {article?.dislikes}
               </div>
               <div className="flex justify-end gap-2 mt-4">
                 <button
